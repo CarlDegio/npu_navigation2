@@ -203,20 +203,15 @@ local_costmap:
       #修改
       #机器人半径0.3m
       robot_radius: 0.3
-      plugins: ["voxel_layer", "inflation_layer"]
+      #plugins: ["voxel_layer", "inflation_layer"]
+      plugins: ["inflation_layer","obstacle_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 5.0
-        inflation_radius: 0.1
-      voxel_layer:
-        plugin: "nav2_costmap_2d::VoxelLayer"
+        cost_scaling_factor: 2.3
+        inflation_radius: 1.0
+      obstacle_layer:
+        plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
-        publish_voxel_map: True
-        origin_z: 0.0
-        z_resolution: 0.05
-        z_voxels: 16
-        max_obstacle_height: 2.0
-        mark_threshold: 0
         observation_sources: scan
         scan:
         #修改，上车要改成/scan
@@ -225,6 +220,25 @@ local_costmap:
           clearing: True
           marking: True
           data_type: "LaserScan"
+          obstacle_max_range: 10.0
+          obstacle_min_range: 0.2
+      #voxel_layer:
+      #  plugin: "nav2_costmap_2d::VoxelLayer"
+      #  enabled: True
+      #  publish_voxel_map: True
+      #  origin_z: 0.0
+      #  z_resolution: 0.05
+      ##  z_voxels: 16
+      #  max_obstacle_height: 2.0
+      #  mark_threshold: 0
+      #  observation_sources: scan
+      #  scan:
+      #  #修改，上车要改成/scan
+      #    topic: /scan
+      #    max_obstacle_height: 2.0
+      #    clearing: True
+      #    marking: True
+      #    data_type: "LaserScan"
       static_layer:
         map_subscribe_transient_local: True
       always_send_full_costmap: True
@@ -262,14 +276,16 @@ global_costmap:
           clearing: True
           marking: True
           data_type: "LaserScan"
+          obstacle_max_range: 10.0
+          obstacle_min_range: 0.2
       static_layer:
         plugin: "nav2_costmap_2d::StaticLayer"
         map_subscribe_transient_local: True
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         #修改
-        cost_scaling_factor: 5.0
-        inflation_radius: 0.1
+        cost_scaling_factor: 2.3
+        inflation_radius: 1.0
       always_send_full_costmap: True
   global_costmap_client:
     ros__parameters:
